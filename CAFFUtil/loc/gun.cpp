@@ -7,20 +7,24 @@
 #include "..\caff.h"
 #include "..\text.h"
 
+
 extern sCAFFSectionInfo sectioninfoarray[NUMSECTIONS];
-extern char fnames[];
-extern char dbname[];
+extern char fnames[84];
+extern char dbname[88];
 extern char sectionnames[6];
-extern sTEXTheader1 file1data;
+extern sTEXTfileheader file0data;
 extern u32 unknownSection[UNKNOWNSECTIONCOUNT];
 extern sTEXTentry textentries[0xE0];
-extern u8 unknownbyte;
+extern u8 dummyfilebyte;
 
+//****************************************************************//
+//BEGIN HEADER
+//bin offset 0x0
 sCAFFheader header = {
     {CAFFMAGIC}, //magic
     CAFFVERSION, //version
     (u32)&sectioninfoarray, //ptrSectionInfo
-    0x0E71DEF0, //checksum    NOT ACTUALLY CHECKED!!!
+    0x0E71DEF0, //checksum    NOT ACTUALLY CHECKED IN BEAN!!!
     NUMFILENAMES, //numfilenames
     NUMFILEPARTS, //numfileparts
     { //sCAFFheader.subheader1_1;
@@ -42,94 +46,156 @@ sCAFFheader header = {
     0x0, //unk0x4b
     sizeof(sectionnames), //sizeSectionNames
     { //sCAFFheader.sectionsizeinfo2_1;
-       ((u32)&unknownSection-(u32)&sectioninfoarray), //inflatedSize
+       ((u32)&unknownSection-(u32)&sectioninfoarray), //sizeof(section_0) //inflatedSize
        0x0, //unk0x4
        0x0, //unk0x8
        0x0, //unk0xC
-       ((u32)&unknownSection-(u32)&sectioninfoarray), //defaltedSize
+       ((u32)&unknownSection-(u32)&sectioninfoarray), //sizeof(section_0) //defaltedSize
     },
     { //sCAFFheader.sectionsizeinfo2_2;
-       sizeof(unknownSection), //inflatedSize
+       sizeof(unknownSection), //sizeof(section_1) //inflatedSize
        0x0, //unk0x4
        0x0, //unk0x8
        0x0, //unk0xC
-       (u32)sizeof(unknownSection), //defaltedSize
+       (u32)sizeof(unknownSection), //sizeof(section_1) //defaltedSize
     }
 };
-//END header
+//END HEADER
+//****************************************************************//
 
+
+
+
+
+
+
+
+//****************************************************************//
+//BEGIN SECTIONS
+//bin offset 0x78
+//BEGIN linked as section_0
+
+//BEGIN compiled as seperate file
 sCAFFSectionInfo sectioninfoarray[NUMSECTIONS] = 
 {
     0, //by
     0x5, //offset
     0x0, //b
-    0x1A30, //length1 //sizeof(sectioninfoarray) + sizeof(sectionnames) + sizeof(filenames) + sizeof(dbname)
+    0x1A30, //sizeof(FILES) //length1 u or c
     0x0, //d
     0x0, //e
     0x0, //f
     0x0, //g
-    0x1A30, //length2
+    0x1A30, //sizeof(FILES) //length2 u or c
 };
-
+//END compiled as seperate file
+ 
+//BEGIN compiled as seperate file
 char sectionnames[6] = 
 {
     ".data"
 };
-
+//END compiled as seperate file
+ 
+//BEGIN compiled as seperate file
 #define FNAMESLEN 84
-u32 fnamesSize = FNAMESLEN; //namesSize
+u32 fnamesSize = FNAMESLEN; ////sizeof(fnames)
 u32 fnamesOffsets[] = {0x0}; //namesOffsetTable
 char fnames[FNAMESLEN] = "D:\\Work\\GoldenEye\\dev\\bean\\Assets\\UberRoot\\loc\\english\\gun\\XENONBETA_v1\\default.str";
-
+//END compiled as seperate file
+ 
+//BEGIN compiled as seperate file
 #define DBSTRLEN 88
-u32 dbnameSize = DBSTRLEN;
+u32 dbnameSize = DBSTRLEN; //sizeof(dbname)
 char dbname[DBSTRLEN] = { "D:\\Work\\GoldenEye\\dev\\bean\\Assets\\UberRoot\\loc\\english\\gun\\XENONBETA_v1\\default.str.adb" };
-
-
+//END compiled as seperate file
+ 
+//BEGIN compiled as seperate file
 sFilePartHeader fileheaders[NUMFILEPARTS] = {
     1, //id
     0, //offset
-    ((u32)&unknownbyte-(u32)&file1data), //size
+    ((u32)&dummyfilebyte-(u32)&file0data), //sizeof(FILE_0) //size
     1, //sectionnum
     5, //unk0x10
 };
+//END compiled as seperate file
+
+//END linked as section_0
 
 
 
+
+
+//BEGIN linked as section_1
+//bin offset 0x168
+//BEGIN compiled as seperate file
 u32 unknownSection[UNKNOWNSECTIONCOUNT] = {
     0x1, //
     0x1, //
     0x1, //
     0x14, //
 };
+//END compiled as seperate file
 
-////BEGIN FILE1 DATA
-#define NUMTEXTSTRINGS 0xDF
+//END linked as section_1
 
-sTEXTheader1 file1data = {
+//END SECTIONS
+//****************************************************************//
+
+
+
+
+
+
+
+
+
+
+
+//****************************************************************//
+//BEGIN FILES
+//bin offset 0x178
+//BEGIN FILE_0
+
+//BEGIN compiled as seperate file
+sTEXTfileheader file0data = {
     TEXTMAGIC, //magic
     TEXTVERSION, //version
-    sizeof(file1data), //ptrsTEXTheader2
+    sizeof(file0data), //ptrsTEXTdataheader
     0x0, //unk0x18
     0x0, //unk0x1C
 };
+//END compiled as seperate file
 
-sTEXTheader2 lsbdata = {
+//BEGIN compiled as seperate file
+sTEXTdataheader lsbdata = {
     LSB2MAGIC, //magic
     0x1000000, //unk0x24
     0x2000000, //unk0x28
-    0x24, //unk0x2C
+    sizeof(lsbdata), //unk0x2C size or ptr to textheader
     0x4, //unk0x30
-    0x24, //unk0x34
+    sizeof(lsbdata), //unk0x34 size or ptr to textheader 
     0x0, //unk0x38
     0x0, //unk0x3C
     0x0, //unk0x40
+};
+//END compiled as seperate file
+
+//BEGIN compiled as seperate file
+#define NUMTEXTSTRINGS 0xDF
+#define NUMTEXTENTRIES NUMTEXTSTRINGS+1
+sTEXTentriesheader textheader = {
     sizeof(textentries), //size
     NUMTEXTSTRINGS    //count
 };
-//this is actual file data
-//linked as own file before anthing else
-sTEXTentry textentries[0xE0] = {
+//END compiled as seperate file
+
+//BEGIN compiled as seperate file
+//COMPILED AND LINKED FIRST!!!!!
+//.rdata based at 0x00000000
+//second column is offset based on char count not bytes 
+//wchar_t is 2 bytes
+sTEXTentry textentries[NUMTEXTENTRIES] = {
     {0x9800, L"   D5K\n"},
     {0x9801, L"   Issue\n"},
     {0x9802, L"   Mine\n"},
@@ -355,8 +421,12 @@ sTEXTentry textentries[0xE0] = {
     {0x98DE, L"suicide count"},
     {0x98DE, 0},
 };
+//END compiled as seperate file
+//END FILE_0
 
+//BEGIN FILE_1 //maybe padding and some addrs above are calculted on that
+u8 dummyfilebyte = 0;
+//END FILE_1
 
-//dummy for unknown file or padding
-u8 unknownbyte = 0;
-
+//END FILES
+//****************************************************************//
