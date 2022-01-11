@@ -48,7 +48,7 @@ typedef struct sFilePartHeader{
 typedef struct sCAFFheader {
     u8 magic[4];
     u8 version[16];
-    u32 ptrSectionInfo;  //sCAFFSectionInfo* ptrSectionInfo;
+    u32 ptrSections;  //u8* SECTIONS;
     u32 checksum;
     u32 numfilenames;
     u32 numfileparts;

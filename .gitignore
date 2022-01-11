@@ -4,4 +4,7 @@ Release/*
 *.vcxproj.user
 CAFFUtil/Debug/*
 CAFFUtil/Release/*
-
+CAFFUtil/x64/*
+CAFFUtil/x86/*
+/x64/*
+/x86/*

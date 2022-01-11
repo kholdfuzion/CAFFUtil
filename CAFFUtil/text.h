@@ -30,6 +30,8 @@ typedef struct sTEXTentriesheader {
     u32 size;
     u32 count;
 } sTEXTentriesheader;
+
+
 typedef struct sTEXTentry {
     u16 id;
     const wchar_t* textstring;

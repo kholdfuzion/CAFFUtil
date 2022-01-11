@@ -1,8 +1,7 @@
 #pragma once
 #include <windows.h>
 #include <iostream>
-const int EXITCODE_SUCCESS = 0;
-const int EXITCODE_FAILURE = 1;
+
 
 inline WORD ReverseEndianness(WORD in)
 {

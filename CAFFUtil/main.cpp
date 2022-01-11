@@ -2,7 +2,8 @@
 //
 #include <windows.h>
 #include <iostream>
-#include "util.h"
+#include "main.h"
+#include "file.h"
 
 
 void printusage(void)
@@ -19,4 +20,7 @@ int _cdecl main(int argc, char* argv[])
         printusage();
         return EXITCODE_FAILURE;
     }
+
+    char* buffer = openfile(argv[1]);
+
 }

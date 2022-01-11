@@ -142,7 +142,9 @@
     <ClCompile Include="caff.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="loc\gun.cpp" />
+    <ClCompile Include="prop\alarm1.cpp" />
     <ClCompile Include="text.cpp" />
+    <ClCompile Include="file.cpp" />
     <ClCompile Include="util.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -150,6 +152,7 @@
     <ClInclude Include="main.h" />
     <ClInclude Include="text.h" />
     <ClInclude Include="types.h" />
+    <ClInclude Include="file.h" />
     <ClInclude Include="util.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
