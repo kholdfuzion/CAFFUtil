@@ -42,7 +42,7 @@ sCAFFheader header = {
     0x0, //unk0x44
     BIG, //endian
     NUMSECTIONS, //numsections
-    0x0, //unk0x4a
+    0x0, //isCompressed
     0x0, //unk0x4b
     sizeof(sectionnames), //sizeSectionNames
     { //sCAFFheader.sectionsizeinfo2_1;

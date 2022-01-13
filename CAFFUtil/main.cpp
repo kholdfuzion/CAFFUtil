@@ -4,6 +4,7 @@
 #include <iostream>
 #include "main.h"
 #include "file.h"
+#include "caff.h"
 
 
 void printusage(void)
@@ -20,7 +21,15 @@ int _cdecl main(int argc, char* argv[])
         printusage();
         return EXITCODE_FAILURE;
     }
-
     char* buffer = openfile(argv[1]);
+    if(!buffer) {
+        printf("failed to open file");
+    }
+    int headercode= CAFF_CheckHeader(&buffer[0]);
+    if (headercode)
+    {
+        printf("bad header! code: %d", headercode);
+    }
+
 
 }

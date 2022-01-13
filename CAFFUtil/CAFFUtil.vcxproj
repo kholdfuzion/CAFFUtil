@@ -141,8 +141,6 @@
   <ItemGroup>
     <ClCompile Include="caff.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="loc\gun.cpp" />
-    <ClCompile Include="prop\alarm1.cpp" />
     <ClCompile Include="text.cpp" />
     <ClCompile Include="file.cpp" />
     <ClCompile Include="util.cpp" />

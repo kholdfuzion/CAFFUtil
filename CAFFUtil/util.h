@@ -1,31 +1,30 @@
 #pragma once
-#include <windows.h>
-#include <iostream>
+#include "types.h"
 
 
-inline WORD ReverseEndianness(WORD in)
+inline u16 ReverseEndianness(u16 in)
 {
-    WORD out;
-    ((BYTE*)&out)[0] = ((BYTE*)&in)[1];
-    ((BYTE*)&out)[1] = ((BYTE*)&in)[0];
+    u16 out;
+    ((u8*)&out)[0] = ((u8*)&in)[1];
+    ((u8*)&out)[1] = ((u8*)&in)[0];
     return out;
 }
 
-inline DWORD ReverseEndianness(DWORD in)
+inline u32 ReverseEndianness(u32 in)
 {
-    DWORD out;
-    ((BYTE*)&out)[0] = ((BYTE*)&in)[3];
-    ((BYTE*)&out)[1] = ((BYTE*)&in)[2];
-    ((BYTE*)&out)[2] = ((BYTE*)&in)[1];
-    ((BYTE*)&out)[3] = ((BYTE*)&in)[0];
+    u32 out;
+    ((u8*)&out)[0] = ((u8*)&in)[3];
+    ((u8*)&out)[1] = ((u8*)&in)[2];
+    ((u8*)&out)[2] = ((u8*)&in)[1];
+    ((u8*)&out)[3] = ((u8*)&in)[0];
     return out;
 }
-inline DWORD ReadDWORD(BYTE in)
+inline u32 Readu32(u8 in)
 {
-    DWORD out;
-    ((BYTE*)&out)[0] = ((BYTE*)&in)[0];
-    ((BYTE*)&out)[1] = ((BYTE*)&in)[1];
-    ((BYTE*)&out)[2] = ((BYTE*)&in)[2];
-    ((BYTE*)&out)[3] = ((BYTE*)&in)[3];
+    u32 out;
+    ((u8*)&out)[0] = ((u8*)&in)[0];
+    ((u8*)&out)[1] = ((u8*)&in)[1];
+    ((u8*)&out)[2] = ((u8*)&in)[2];
+    ((u8*)&out)[3] = ((u8*)&in)[3];
     return out;
 }

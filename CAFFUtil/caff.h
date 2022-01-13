@@ -46,8 +46,8 @@ typedef struct sFilePartHeader{
 } sFilePartHeader;
 
 typedef struct sCAFFheader {
-    u8 magic[4];
-    u8 version[16];
+    char magic[4];
+    char version[16];
     u32 ptrSections;  //u8* SECTIONS;
     u32 checksum;
     u32 numfilenames;
@@ -57,7 +57,7 @@ typedef struct sCAFFheader {
     u32 unk0x44;
     u8 endian;
     u8 numsections;
-    u8 unk0x4a;
+    u8 isCompressed;
     u8 unk0x4b;
     u32 sizeSectionNames;
     sCAFFsectionsizeinfo filesectioninfo;
@@ -65,3 +65,5 @@ typedef struct sCAFFheader {
 } sCAFFheader;
 
 
+s32 CAFF_CheckHeader(const char* buffer);
+u32 calcCheckSum(char* buffer, u32 len);

@@ -30,17 +30,11 @@
     <ClCompile Include="caff.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="loc\gun.cpp">
-      <Filter>Source Files\loc</Filter>
-    </ClCompile>
     <ClCompile Include="file.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="util.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="prop\alarm1.cpp">
-      <Filter>Source Files\prop</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
