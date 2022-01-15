@@ -22,7 +22,7 @@ typedef struct sCAFFsectionsizeinfo {
     u32 unk0x4;
     u32 unk0x8;
     u32 unk0xC;
-    u32 defaltedSize; 
+    u32 deflatedSize; 
 } sCAFFsectionsizeinfo;
 
 typedef struct sCAFFSectionInfo {
@@ -48,15 +48,16 @@ typedef struct sFilePartHeader{
 typedef struct sCAFFheader {
     char magic[4];
     char version[16];
+
     u32 ptrSections;  //u8* SECTIONS;
     u32 checksum;
-    u32 numfilenames;
-    u32 numfileparts;
+    u32 numAssets;
+    u32 numSections;
     sCAFFsubheader1 subheader1_1;
     sCAFFsubheader1 subheader1_2;
     u32 unk0x44;
     u8 endian;
-    u8 numsections;
+    u8 numAllocations;
     u8 isCompressed;
     u8 unk0x4b;
     u32 sizeSectionNames;

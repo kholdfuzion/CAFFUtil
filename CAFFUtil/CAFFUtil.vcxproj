@@ -143,12 +143,14 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="text.cpp" />
     <ClCompile Include="file.cpp" />
+    <ClCompile Include="texture.cpp" />
     <ClCompile Include="util.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="caff.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="text.h" />
+    <ClInclude Include="texture.h" />
     <ClInclude Include="types.h" />
     <ClInclude Include="file.h" />
     <ClInclude Include="util.h" />

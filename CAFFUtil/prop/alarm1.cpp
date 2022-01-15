@@ -1,6 +1,6 @@
-#define NUMFILENAMES 0x4
-#define NUMFILEPARTS 0x9
-#define NUMSECTIONS 0x3
+#define NUMASSETS 0x4
+#define NUMSECTIONS 0x9
+#define NUMALLOCATIONS 0x3
 #define UNKNOWNSECTIONCOUNT 4
 
 #include "..\types.h"
@@ -13,8 +13,8 @@ sCAFFheader header = {
     CAFFVERSION, //version
     sizeof(header), //ptrSectionInfo
     0x0E65B1C0, //checksum    NOT ACTUALLY CHECKED IN BEAN!!!
-    NUMFILENAMES, //numFileNames
-    NUMFILEPARTS, //numFileParts
+    NUMASSETS, //numAssets
+    NUMSECTIONS, //numSections
     {
         0x0, //unk0x0
         0x0, //unk0x1
@@ -29,7 +29,7 @@ sCAFFheader header = {
     },
     0xD, //unk0x44
     BIG, //endian
-    NUMSECTIONS, //numsections
+    NUMALLOCATIONS, //numAllocations
     0x0, //isCompressed
     0x2, //unk0x4b
     sizeof(sectionnames), //sizeSectionNames
@@ -65,7 +65,7 @@ sCAFFheader header = {
 
 //BEGIN linked as section_0
 //BEGIN compiled as seperate file
-sCAFFSectionInfo sectioninfoarray[NUMSECTIONS] = 
+sCAFFSectionInfo sectioninfoarray[NUMALLOCATIONS] = 
 {
     {
         0, //by
@@ -113,7 +113,7 @@ char sectionnames[19] =
 //BEGIN compiled as seperate file
 #define FNAMESLEN 0x121
 u32 fnamesSize = FNAMESLEN; ////sizeof(fnames)
-u32 fnamesOffsets[] = {0x0, 0x59, 0x5E, 0xBF}; //namesOffsetTable
+u32 fnamesOffsets[NUMASSETS] = {0x0, 0x59, 0x5E, 0xBF}; //namesOffsetTable
 const char fnames[FNAMESLEN] = 
 {
     "C:\\Work\\Rare\\GE\\Src\\Xbox360\\Files\\UberRoot\\original\\prop\\alarm1\\XENONBETA_v1\\default.bin\0"

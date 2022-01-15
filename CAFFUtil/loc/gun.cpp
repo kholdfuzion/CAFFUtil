@@ -1,6 +1,6 @@
-#define NUMFILENAMES 0x1
-#define NUMFILEPARTS 0x1
+#define NUMASSETS 0x1
 #define NUMSECTIONS 0x1
+#define NUMALLOCATIONS 0x1
 #define UNKNOWNSECTIONCOUNT 4
 
 #include "..\types.h"
@@ -8,7 +8,7 @@
 #include "..\text.h"
 
 
-extern sCAFFSectionInfo sectioninfoarray[NUMSECTIONS];
+extern sCAFFSectionInfo sectioninfoarray[numAllocations];
 extern char fnames[84];
 extern char dbname[88];
 extern char sectionnames[6];
@@ -25,8 +25,8 @@ sCAFFheader header = {
     CAFFVERSION, //version
     (u32)&sectioninfoarray, //ptrSectionInfo
     0x0E71DEF0, //checksum    NOT ACTUALLY CHECKED IN BEAN!!!
-    NUMFILENAMES, //numfilenames
-    NUMFILEPARTS, //numfileparts
+    NUMASSETS, //numAssets
+    NUMSECTIONS, //numSections
     { //sCAFFheader.subheader1_1;
        0x0, //unk0x0
        0x0, //unk0x4
@@ -41,7 +41,7 @@ sCAFFheader header = {
     },
     0x0, //unk0x44
     BIG, //endian
-    NUMSECTIONS, //numsections
+    NUMALLOCATIONS, //numAllocations
     0x0, //isCompressed
     0x0, //unk0x4b
     sizeof(sectionnames), //sizeSectionNames
@@ -50,14 +50,14 @@ sCAFFheader header = {
        0x0, //unk0x4
        0x0, //unk0x8
        0x0, //unk0xC
-       ((u32)&unknownSection-(u32)&sectioninfoarray), //sizeof(section_0) //defaltedSize
+       ((u32)&unknownSection-(u32)&sectioninfoarray), //sizeof(section_0) //deflatedSize
     },
     { //sCAFFheader.sectionsizeinfo2_2;
        sizeof(unknownSection), //sizeof(section_1) //inflatedSize
        0x0, //unk0x4
        0x0, //unk0x8
        0x0, //unk0xC
-       (u32)sizeof(unknownSection), //sizeof(section_1) //defaltedSize
+       (u32)sizeof(unknownSection), //sizeof(section_1) //deflatedSize
     }
 };
 //END HEADER
@@ -76,7 +76,7 @@ sCAFFheader header = {
 //BEGIN linked as section_0
 
 //BEGIN compiled as seperate file
-sCAFFSectionInfo sectioninfoarray[NUMSECTIONS] = 
+sCAFFSectionInfo sectioninfoarray[NUMALLOCATIONS] = 
 {
     0, //by
     0x5, //offset
@@ -100,7 +100,7 @@ char sectionnames[6] =
 //BEGIN compiled as seperate file
 #define FNAMESLEN 84
 u32 fnamesSize = FNAMESLEN; ////sizeof(fnames)
-u32 fnamesOffsets[] = {0x0}; //namesOffsetTable
+u32 fnamesOffsets[NUMASSETS] = {0x0}; //namesOffsetTable
 char fnames[FNAMESLEN] = "D:\\Work\\GoldenEye\\dev\\bean\\Assets\\UberRoot\\loc\\english\\gun\\XENONBETA_v1\\default.str";
 //END compiled as seperate file
  
@@ -111,7 +111,7 @@ char dbname[DBSTRLEN] = { "D:\\Work\\GoldenEye\\dev\\bean\\Assets\\UberRoot\\loc
 //END compiled as seperate file
  
 //BEGIN compiled as seperate file
-sFilePartHeader fileheaders[NUMFILEPARTS] = {
+sFilePartHeader fileheaders[NUMSECTIONS] = {
     1, //id
     0, //offset
     ((u32)&dummyfilebyte-(u32)&file0data), //sizeof(FILE_0) //size
