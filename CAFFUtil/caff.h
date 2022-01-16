@@ -67,4 +67,4 @@ typedef struct sCAFFheader {
 
 
 s32 CAFF_CheckHeader(const char* buffer);
-u32 calcCheckSum(char* buffer, u32 len);
+u32 elfhash(char* buffer, u32 len);

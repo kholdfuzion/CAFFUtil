@@ -3,7 +3,7 @@
 
 #define TEXTMAGIC "text"
 #define TEXTVERSION "02.09.05.0034"
-#define LSB2MAGIC 0x4c, 0x53, 0x42, 0x32
+#define LSB2MAGIC 0x4c, 0x53, 0x42, 0x32 //LSB2
 
 typedef struct sTEXTfileheader {
     u8 magic[5];
