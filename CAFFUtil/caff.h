@@ -25,8 +25,9 @@ typedef struct sCAFFsectionsizeinfo {
     u32 deflatedSize; 
 } sCAFFsectionsizeinfo;
 
+#pragma pack( 1 )
 typedef struct sCAFFSectionInfo {
-    u8 by;
+    u8 by:8;
     u32 offset;
     u32 b;
     u32 length1;
@@ -37,6 +38,7 @@ typedef struct sCAFFSectionInfo {
     u32 length2;    
 } sCAFFSectionInfo;
 
+#pragma pack( 1 )
 typedef struct sFilePartHeader{
     u32 id;
     u32 offset;
@@ -45,6 +47,7 @@ typedef struct sFilePartHeader{
     u8 unk0x10;
 } sFilePartHeader;
 
+#pragma pack( 1 )
 typedef struct sCAFFheader {
     char magic[4];
     char version[16];
@@ -65,6 +68,22 @@ typedef struct sCAFFheader {
     sCAFFsectionsizeinfo unknownsectioninfo;
 } sCAFFheader;
 
+typedef struct sCAFFFile {
+    sCAFFheader* header;
+    sCAFFSectionInfo* sectioninfo;
+    char* sectionnames;
+    u32 fnamesSize;
+    u32* fnamesOffsets;
+    char* fnamesArray;
+    u32 dbnameSize;
+    char* dbnameArray;
+    sFilePartHeader* filepartheaders;
+    u32* unknownsection;
+} sCAFFSection;
 
 s32 CAFF_CheckHeader(const char* buffer);
 u32 elfhash(char* buffer, u32 len);
+void CAFF_FixupHeader(sCAFFheader* header);
+void CAFF_FixupSectionInfo(sCAFFSectionInfo* sectioninfo);
+void CAFF_FixupFilePartHeader(sFilePartHeader* filepartheader);
+void CAFF_LoadFile(sCAFFFile* caffFile, char* buffer);

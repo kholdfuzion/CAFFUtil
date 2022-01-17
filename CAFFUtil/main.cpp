@@ -5,6 +5,8 @@
 #include "main.h"
 #include "file.h"
 #include "caff.h"
+#include "util.h"
+
 
 
 void printusage(void)
@@ -30,6 +32,13 @@ int _cdecl main(int argc, char* argv[])
     {
         printf("bad header! code: %d", headercode);
     }
+
+
+    sCAFFFile caffFile;
+    CAFF_LoadFile(&caffFile, &buffer[0]);
+
+    
+    //printf("%s\n", caffFile.dbnameArray);
 
 
 }
