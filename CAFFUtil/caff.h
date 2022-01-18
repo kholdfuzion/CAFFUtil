@@ -1,6 +1,6 @@
 #pragma once
 #include "types.h"
-#include "text.h"
+
 
 #define CAFFMAGIC 0x43, 0x41, 0x46, 0x46
 #define CAFFVERSION "07.08.06.0036"
@@ -79,6 +79,7 @@ typedef struct sCAFFFile {
     char* dbnameArray;
     sFilePartHeader* filepartheaders;
     u32* unknownsection;
+    void* files;
 } sCAFFSection;
 
 s32 CAFF_CheckHeader(const char* buffer);

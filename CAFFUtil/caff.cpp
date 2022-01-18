@@ -13,19 +13,19 @@ const char CAFFVersion[16] = CAFFVERSION;
 
 s32 CAFF_CheckHeader(const char* buffer)
 {
-    u32 ptrCHECKSUM;
-
     sCAFFheader* header = (sCAFFheader*)buffer;
     if (strncmp(header->magic, CAFFMagic, sizeof(CAFFMagic)))
     {
         printf("Invalid CAFF magic\n");
         return 1;
     }
+    printf("Valid CAFF magic\n");
     if (strncmp(header->version, CAFFVersion, sizeof(CAFFVersion)))
     {
         printf("Invalid CAFF version\n");
         return 2;
     }
+    printf("Valid CAFF version\n");
 
 
     if (header->endian & BIG)
@@ -38,7 +38,9 @@ s32 CAFF_CheckHeader(const char* buffer)
         //i had hashing working but apparently checked in wrong code and cant figure out wtf was wrong
         //so cheat for now
         //return 3;
+        printf("CAFF hash not validated\n");
         return 0;
+        
     }
     return 0;
 }
@@ -171,5 +173,8 @@ void CAFF_LoadFile(sCAFFFile* caffFile, char* buffer)
         }
         //printf("%08x",caffFile->unknownsection[i]);
     }
+    caffFile->files = (char*)&buffer[caffFile->header->ptrSections + caffFile->header->filesectioninfo.deflatedSize + caffFile->header->unknownsectioninfo.deflatedSize];
+
+    printf("CAFF info loaded\n");
 
 }

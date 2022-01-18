@@ -6,6 +6,7 @@
 #include "file.h"
 #include "caff.h"
 #include "util.h"
+#include "text.h"
 
 
 
@@ -37,7 +38,21 @@ int _cdecl main(int argc, char* argv[])
     sCAFFFile caffFile;
     CAFF_LoadFile(&caffFile, &buffer[0]);
 
-    
+    //BEGIN quick hacky for testing
+    //should be proper logic to loop through all filesparts, check .data headers (or find where type is stored) to find loader
+    if (!TEXT_CheckHeader((char*)caffFile.files))
+    {
+        printf("CAFF has TEXT data\n");
+        sTEXTfile textfile;
+        TEXT_LoadFile(&caffFile, &textfile, (char*)caffFile.files);
+        //process loaded text
+        //destroy
+    }
+    //END quick hacky for testing
+
+
+
+
     //printf("%s\n", caffFile.dbnameArray);
 
 
