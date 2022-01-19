@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="caff.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="rgba.cpp" />
     <ClCompile Include="text.cpp" />
     <ClCompile Include="file.cpp" />
     <ClCompile Include="texture.cpp" />
@@ -149,6 +150,7 @@
   <ItemGroup>
     <ClInclude Include="caff.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="rgba.h" />
     <ClInclude Include="text.h" />
     <ClInclude Include="texture.h" />
     <ClInclude Include="types.h" />

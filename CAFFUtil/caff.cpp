@@ -37,11 +37,12 @@ s32 CAFF_CheckHeader(const char* buffer)
     {
         //i had hashing working but apparently checked in wrong code and cant figure out wtf was wrong
         //so cheat for now
+        //printf("Invalid CAFF hash\n");
         //return 3;
         printf("CAFF hash not validated\n");
         return 0;
-        
     }
+    printf("Valid CAFF hash\n");
     return 0;
 }
 
@@ -95,7 +96,7 @@ void CAFF_FixupFilePartHeader(sFilePartHeader* filepartheader)
     filepartheader->size = ReverseEndianness(filepartheader->size);
 }
 
-//this is raw ghidra output from Bean and Viva pinata, but use same algo
+//this is raw ghidra output from Bean and Viva Pinata PC, both use same algo and version CAFF
 u32 elfhash(char* str, u32 len)
 {
 
@@ -117,7 +118,12 @@ void CAFF_LoadFile(sCAFFFile* caffFile, char* buffer)
     caffFile->header = (sCAFFheader*)&buffer[0];
     if ((caffFile->header)->endian == BIG)
     {
+        printf("CAFF is BIG endian\n");
         CAFF_FixupHeader((caffFile->header));
+    }
+    else
+    {
+        printf("CAFF is LITTLE endian\n");
     }
     caffFile->sectioninfo = (sCAFFSectionInfo*)&buffer[(caffFile->header)->ptrSections];
     if ((caffFile->header)->endian == BIG)
@@ -128,6 +134,13 @@ void CAFF_LoadFile(sCAFFFile* caffFile, char* buffer)
         }
     }
     caffFile->sectionnames = (char*)&buffer[STARTSECTIONNAMES];
+    printf("sections:\n");
+    for (int i = 0; i < (caffFile->header)->sizeSectionNames; )
+    {
+        printf(" %s\n", &caffFile->sectionnames[i]);
+        i = i + 1 + strlen(&caffFile->sectionnames[i]);
+    }
+
     caffFile->fnamesSize = *(u32*)&buffer[STARTFILENAMES];
     if ((caffFile->header)->endian == BIG)
     {
@@ -144,18 +157,20 @@ void CAFF_LoadFile(sCAFFFile* caffFile, char* buffer)
     }
 
     caffFile->fnamesArray = (char*)&buffer[STARTFILENAMESARRAY];
-    //for (int i = 0; i < (caffFile->header)->numAssets; i++)
-    //{
-    //    printf("%x ", i);
-    //    printf("%s\n", &caffFile->fnamesArray[caffFile->fnamesOffsets[i]]);
-    //
-    //}
+    printf("files:\n");
+    for (int i = 0; i < (caffFile->header)->numAssets; i++)
+    {
+        printf("  %x ", i);
+        printf("%s\n", &caffFile->fnamesArray[caffFile->fnamesOffsets[i]]);
+    
+    }
     caffFile->dbnameSize = *(u32*)&buffer[STARTDBNAME];
     if ((caffFile->header)->endian == BIG)
     {
         caffFile->dbnameSize = ReverseEndianness(caffFile->dbnameSize);
     }
     caffFile->dbnameArray = (char*)&buffer[STARTDBNAME+4];
+    printf("\ndb:\n %s\n", caffFile->dbnameArray);
 
     caffFile->filepartheaders = (sFilePartHeader*)&buffer[STARTDBNAME + 4 + caffFile->dbnameSize];
     for(int i=0;i< caffFile->header->numSections ;i++)
@@ -176,5 +191,4 @@ void CAFF_LoadFile(sCAFFFile* caffFile, char* buffer)
     caffFile->files = (char*)&buffer[caffFile->header->ptrSections + caffFile->header->filesectioninfo.deflatedSize + caffFile->header->unknownsectioninfo.deflatedSize];
 
     printf("CAFF info loaded\n");
-
 }

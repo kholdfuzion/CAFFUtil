@@ -1,13 +1,14 @@
-
+#include <iostream>
+#include "util.h"
 #include "caff.h"
 #include "texture.h"
+#include "rgba.h"
 
 const char TEXTUREMagic[8] = { TEXTUREMAGIC };  // "texture"
 const char TEXTUREVersion[16] = TEXTUREVERSION;
 
 
-
-const char* StringFromD3DFORMAT(u32 format)
+const char* TEXTURE_GetFormat(u32 format)
 {
     switch (format) {
     case 0x1A200152:
@@ -156,6 +157,65 @@ const char* StringFromD3DFORMAT(u32 format)
         return "D3DFMT_D32";
 
     default:
-        return "ERROR !!!!!\nERROR !!!!!\nERROR !!!!!\nERROR !!!!!\nERROR !!!!!\nERROR !!!!!\nERROR !!!!!\nERROR !!!!!\nERROR !!!!!\n";
+        return "ERROR NEWFORMAT!!!!!\n";
     }
 }
+
+s32 TEXTURE_CheckHeader(const char* buffer)
+{
+
+    sTEXTUREFileHeader* header = (sTEXTUREFileHeader*)buffer;
+    if (strncmp(header->magic, TEXTUREMagic, sizeof(TEXTUREMagic)))
+    {
+        printf("Invalid TEXTURE magic\n");
+        return 1;
+    }
+    printf("Valid TEXTURE magic\n");
+
+    if (strncmp(header->version, TEXTUREVersion, sizeof(TEXTUREVersion)))
+    {
+        printf("Invalid TEXTURE version\n");
+        return 2;
+    }
+    printf("Valid TEXTURE version\n");
+    return 0;
+}
+
+void TEXTURE_LoadFile(sCAFFFile* caffFile, sTEXTUREFile* textureFile, const char* buffer)
+{
+    textureFile->header = (sTEXTUREFileHeader* )caffFile->files;
+    if(caffFile->header->endian == BIG)
+    {
+        textureFile->header->Format = ReverseEndianness(textureFile->header->Format);
+        textureFile->header->Type = ReverseEndianness(textureFile->header->Type);
+        textureFile->header->unk1 = ReverseEndianness(textureFile->header->unk1);
+        textureFile->header->Width = ReverseEndianness(textureFile->header->Width);
+        textureFile->header->Height = ReverseEndianness(textureFile->header->Height);
+        textureFile->header->Offset = ReverseEndianness(textureFile->header->Offset);
+        textureFile->header->MipOffset = ReverseEndianness(textureFile->header->MipOffset);
+        textureFile->header->Levels = ReverseEndianness(textureFile->header->Levels);
+        textureFile->header->Ptr = ReverseEndianness(textureFile->header->Ptr);
+        textureFile->header->Depth = ReverseEndianness(textureFile->header->Depth);
+    }
+    printf("Image Info:\n");
+    printf(" Format: %s\n", TEXTURE_GetFormat(textureFile->header->Format));
+    printf(" Type: 0x%x\n", textureFile->header->Type);
+    printf(" unk1: 0x%x\n", textureFile->header->unk1);
+    printf(" Width: %d\n", textureFile->header->Width);
+    printf(" Height: %d\n", textureFile->header->Height);
+    printf(" Offset: 0x%x\n", textureFile->header->Offset);
+    printf(" MipOffset: 0x%x\n", textureFile->header->MipOffset);
+    printf(" Levels: 0x%x\n", textureFile->header->Levels);
+    printf(" Depth: 0x%x\n", textureFile->header->Depth);
+    textureFile->texturedata = (u8*)&buffer[sizeof(sTEXTUREFileHeader)];
+}
+
+void TEXTURE_ConvertFile(sTEXTUREFile* texturefile, const char* outfile)
+{
+    switch(texturefile->header->Format)
+    {
+    case 0x1A200186:
+        RGBA_WRITE_D3DFMT_A8B8G8R8(texturefile, outfile);
+    }
+}
+

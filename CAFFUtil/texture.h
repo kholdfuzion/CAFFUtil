@@ -4,20 +4,31 @@
 #define TEXTUREMAGIC "texture"
 #define TEXTUREVERSION "04.05.05.0032"
 
-struct TEXTURE_HEADER
+#pragma pack ( 1 )
+typedef struct sTEXTUREFileHeader
 {
-    /*0x00*/ char textureMagic[8];
-    /*0x08*/ char textureVersion[16];
-    /*0x18*/ u32 textureFormat;
-    /*0x1C*/ u32 textureType;
-    /*0x20*/ u32 unk1;
-    /*0x24*/ u16 textureWidth;
-    /*0x26*/ u16 textureHeight;
-    /*0x28*/ u32 textureOffset;
-    /*0x2C*/ u32 textureMipOffset;
-    /*0x30*/ u32 textureLevels;
-    /*0x34*/ u32 texturePtr;
-    /*0x38*/ u32 textureDepth;
-    /*0x3C*/ u32 texturePAD[13];
+    char magic[8];
+    char version[16];
+    u32 Format;
+    u32 Type;
+    u32 unk1;
+    u16 Width;
+    u16 Height;
+    u32 Offset;
+    u32 MipOffset;
+    u32 Levels;
+    u32 Ptr;
+    u32 Depth;
+    u32 PAD[13];
+} sTEXTUREFileHeader;
 
-};
+typedef struct sTEXTUREFile
+{
+    sTEXTUREFileHeader* header;
+    u8* texturedata;
+} sTEXTUREFile;
+
+s32 TEXTURE_CheckHeader(const char* buffer);
+void TEXTURE_LoadFile(sCAFFFile* caffFile, sTEXTUREFile* textureFile, const char* buffer);
+void TEXTURE_ConvertFile(sTEXTUREFile* texturefile, const char *outfile);
+

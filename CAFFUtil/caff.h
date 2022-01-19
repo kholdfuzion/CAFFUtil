@@ -88,3 +88,4 @@ void CAFF_FixupHeader(sCAFFheader* header);
 void CAFF_FixupSectionInfo(sCAFFSectionInfo* sectioninfo);
 void CAFF_FixupFilePartHeader(sFilePartHeader* filepartheader);
 void CAFF_LoadFile(sCAFFFile* caffFile, char* buffer);
+

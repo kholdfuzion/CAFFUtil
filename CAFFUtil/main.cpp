@@ -6,7 +6,10 @@
 #include "file.h"
 #include "caff.h"
 #include "util.h"
+
 #include "text.h"
+#include "texture.h"
+
 
 
 
@@ -27,11 +30,13 @@ int _cdecl main(int argc, char* argv[])
     char* buffer = openfile(argv[1]);
     if(!buffer) {
         printf("failed to open file");
+        return EXITCODE_FAILURE;
     }
     int headercode= CAFF_CheckHeader(&buffer[0]);
     if (headercode)
     {
         printf("bad header! code: %d", headercode);
+        return EXITCODE_FAILURE;
     }
 
 
@@ -46,6 +51,15 @@ int _cdecl main(int argc, char* argv[])
         sTEXTfile textfile;
         TEXT_LoadFile(&caffFile, &textfile, (char*)caffFile.files);
         //process loaded text
+        //destroy
+    }
+    if (!TEXTURE_CheckHeader((char*)caffFile.files))
+    {
+        printf("CAFF has TEXTURE data\n");
+        sTEXTUREFile texturefile;
+        TEXTURE_LoadFile(&caffFile, &texturefile, (char*)caffFile.files);
+        TEXTURE_ConvertFile(&texturefile, "output.rgba");
+        //process loaded texture
         //destroy
     }
     //END quick hacky for testing
