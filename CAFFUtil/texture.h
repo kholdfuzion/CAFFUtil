@@ -30,5 +30,5 @@ typedef struct sTEXTUREFile
 
 s32 TEXTURE_CheckHeader(const char* buffer);
 void TEXTURE_LoadFile(sCAFFFile* caffFile, sTEXTUREFile* textureFile, const char* buffer);
-void TEXTURE_ConvertFile(sTEXTUREFile* texturefile, const char *outfile);
+void TEXTURE_ConvertFile(sTEXTUREFile* texturefile, const char* outfile);
 
