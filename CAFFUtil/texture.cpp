@@ -207,7 +207,7 @@ void TEXTURE_LoadFile(sCAFFFile* caffFile, sTEXTUREFile* textureFile, const char
     printf(" MipOffset: 0x%x\n", textureFile->header->MipOffset);
     printf(" Levels: 0x%x\n", textureFile->header->Levels);
     printf(" Depth: 0x%x\n", textureFile->header->Depth);
-    textureFile->texturedata = (u8*)&buffer[sizeof(sTEXTUREFileHeader)];
+    textureFile->texturedata = (u32*)&buffer[sizeof(sTEXTUREFileHeader)];
 }
 
 void TEXTURE_ConvertFile(sTEXTUREFile* texturefile, const char* outfile)

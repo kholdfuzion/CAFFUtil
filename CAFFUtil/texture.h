@@ -25,7 +25,7 @@ typedef struct sTEXTUREFileHeader
 typedef struct sTEXTUREFile
 {
     sTEXTUREFileHeader* header;
-    u8* texturedata;
+    u32* texturedata;
 } sTEXTUREFile;
 
 s32 TEXTURE_CheckHeader(const char* buffer);

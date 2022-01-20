@@ -58,7 +58,8 @@ int _cdecl main(int argc, char* argv[])
         printf("CAFF has TEXTURE data\n");
         sTEXTUREFile texturefile;
         TEXTURE_LoadFile(&caffFile, &texturefile, (char*)caffFile.files);
-        TEXTURE_ConvertFile(&texturefile, "output.rgba");
+        //broken, handle alpha proper and  have to unswizzle before writing
+        //TEXTURE_ConvertFile(&texturefile, "output.rgba");
         //process loaded texture
         //destroy
     }

@@ -33,7 +33,7 @@ char* openfile(const char* filename)
 int writefile(const char* filename, const char* buffer, u32 size)
 {
     FILE* fp;
-    errno_t err = fopen_s(&fp, filename, "w");
+    errno_t err = fopen_s(&fp, filename, "w+");
     if (err != 0)
     {
         printf("Failed to open file %s\n", filename);
