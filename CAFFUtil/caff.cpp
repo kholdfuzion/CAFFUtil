@@ -32,15 +32,14 @@ s32 CAFF_CheckHeader(const char* buffer)
     {
         header->checksum = ReverseEndianness(header->checksum);
     }
-
-    if (elfhash((char*)header, 0x78) != header->checksum)
+    u32 checksum = header->checksum;
+    header->checksum = 0;
+    if (elfhash((char*)header, 0x78) != checksum)
     {
-        //i had hashing working but apparently checked in wrong code and cant figure out wtf was wrong
-        //so cheat for now
-        //printf("Invalid CAFF hash\n");
-        //return 3;
-        printf("CAFF hash not validated\n");
-        return 0;
+
+        printf("Invalid CAFF hash\n");
+        return 3;
+
     }
     printf("Valid CAFF hash\n");
     return 0;
